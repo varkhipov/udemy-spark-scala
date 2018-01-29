@@ -15,7 +15,7 @@ object WordCountBetter {
     val sc = new SparkContext("local[*]", "WordCountBetter")
 
     // Load each line of my book into an RDD
-    val input = sc.textFile("extras/book.txt")
+    val input = sc.textFile("../extras/book.txt")
 
     // Split using a regular expression that extracts words
     val lines = input.flatMap(x => x.split("\\W+"))

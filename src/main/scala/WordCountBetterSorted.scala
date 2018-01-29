@@ -15,7 +15,7 @@ object WordCountBetterSorted {
     val sc = new SparkContext("local", "WordCountBetterSorted")
 
     // Load each line of my book into an RDD
-    val lines = sc.textFile("extras/book.txt")
+    val lines = sc.textFile("../extras/book.txt")
 
     // Split using a regular expression that extracts words
     val words = lines.flatMap(x => x.split("\\W+")).filter(w => w.length > 4)

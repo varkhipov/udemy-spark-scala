@@ -26,7 +26,7 @@ object MaxTemperatures {
     // Create a SparkContext using every core of the local machine
     val sc = new SparkContext("local[*]", "MaxTemperatures")
 
-    val lines = sc.textFile("extras/1800.csv")
+    val lines = sc.textFile("../extras/1800.csv")
     val parsedLines = lines.map(parseLine)
     //    val maxTemps = parsedLines.filter(x => x._2 == "TMAX")
     //    val stationTemps = maxTemps.map(x => (x._1, x._3.toFloat))
