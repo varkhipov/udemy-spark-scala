@@ -9,10 +9,10 @@ import scala.io.Codec
 object PopularMoviesNicer {
 
   /** Load up a Map of movie IDs to movie names. */
-  def loadMovieNames() : Map[Int, String] = {
-
+  def loadMovieNames : Map[Int, String] = {
+    // Looks like it doesn't work ( C�r�monie, La (1995) )
     // Handle character encoding issues:
-    implicit val codec = Codec("UTF-8")
+    implicit val codec: Codec = Codec("UTF-8")
     codec.onMalformedInput(CodingErrorAction.REPLACE)
     codec.onUnmappableCharacter(CodingErrorAction.REPLACE)
 
@@ -27,7 +27,7 @@ object PopularMoviesNicer {
        }
      }
 
-     return movieNames
+     movieNames
   }
 
   /** Our main function where the action happens */
@@ -40,7 +40,7 @@ object PopularMoviesNicer {
     val sc = new SparkContext("local[*]", "PopularMoviesNicer")
 
     // Create a broadcast variable of our ID -> movie name map
-    var nameDict = sc.broadcast(loadMovieNames)
+    val nameDict = sc.broadcast(loadMovieNames)
 
     // Read in each rating line
     val lines = sc.textFile("../ml-100k/u.data")

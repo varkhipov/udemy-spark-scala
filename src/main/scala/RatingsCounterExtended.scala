@@ -1,5 +1,9 @@
+import java.nio.charset.CodingErrorAction
+
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.SparkContext
+
+import scala.io.Codec
 
 object RatingsCounterExtended extends App {
   // Set the log level to only print errors
@@ -22,6 +26,12 @@ object RatingsCounterExtended extends App {
 
   // Map to set of tuples --> (id, title)
   val moviesIdsAndTitles = moviesRDD.map(line => {
+    // Looks like it doesn't work ( 4 | C�r�monie, La (1995) )
+    // Handle character encoding issues:
+    implicit val codec: Codec = Codec("UTF-8")
+    codec.onMalformedInput(CodingErrorAction.REPLACE)
+    codec.onUnmappableCharacter(CodingErrorAction.REPLACE)
+
     val splitted = line.split("\\|")
     val id = splitted(0).toInt
     val title = splitted(1)
